@@ -1,37 +1,37 @@
-const gameField = `
-<ul id="gameBoard">
-    <li class="tic" id="0_0"></li>
-    <li class="tic" id="0_1"></li>
-    <li class="tic" id="0_2"></li>
-    <li class="tic" id="1_0"></li>
-    <li class="tic" id="1_1"></li>
-    <li class="tic" id="1_2"></li>
-    <li class="tic" id="2_0"></li>
-    <li class="tic" id="2_1"></li>
-    <li class="tic" id="2_2"></li>
-</ul>
-`;
-
-const gamesArray = [1, 2, 3, 4, 5, 6, 7, 8];
-const backUrl = '';
+const mockResponce = "a;b;c;d";
 
 class Game {
   constructor() {}
-
+  /* 
   sendRequest(url, method) {
     return fetch(url).then((res) => res.json());
   }
-
-  addGameField(arr) {
-    arr.forEach(() => {
+ */
+  addGameField(str) {
+    const arr = str.split(";");
+    arr.forEach((el) => {
       const gameWindow = document.createElement("li");
+      gameWindow.innerHTML = el;
       gameWindow.classList.add("tic");
-    //   gameWindow.innerHTML = gameField;
-      document.querySelector('#gameBoard').appendChild(gameWindow);
+      document.querySelector("#gameBoard").appendChild(gameWindow);
+    });
+  }
+
+  receive() {
+    $.ajax({
+      type: "GET",
+      global: false,
+      dataType: "json",
+      url: "/game/getString",
+      success: (res) => {
+        this.addGameField(res).bind(this);
+      },
+      error: function (error) {
+        console.log(error);
+      },
     });
   }
 }
 
 const myGame = new Game();
-myGame.sendRequest(backUrl);
-myGame.addGameField(gamesArray);
+myGame.receive();
