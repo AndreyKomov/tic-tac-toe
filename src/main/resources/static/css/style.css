@@ -66,3 +66,9 @@ footer {
     text-align: center;
     padding-top: 20px;
 }
+
+.started-games {
+    display: grid;
+    width: 900px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
